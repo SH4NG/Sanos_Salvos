@@ -1,0 +1,43 @@
+-----EDPOINS-------
+
+USUARIO: 
+	http://localhost:8081/users/register  PARA REGISTRARSE
+	http://localhost:8081/login?user=admin&encryptedPass=123456  PARA LOGUEARSE
+	AUTH: NO AUTH
+	JSON: {
+  		"username": "user",
+  		"email": "user@gmail.com",
+  		"password": "123456",
+  		"role": "ROLE_USER"
+	      }
+MASCOTA: 
+	http://localhost:8082/mascotas
+	AUTH: TOKEN BEARE (USER) || PARA DELETE SOLO USER CON "ROLE_ADMIN"
+	JSON: {
+  		"nombre": "chascon",
+  		"tipo": "Perro",
+  		"raza": "kiltro",
+  		"color": "blanco",
+  		"edad": 4
+	      }
+REPORTE: 
+	http://localhost:8083/reportes
+	AUTH: TOKEN BEARE (USER) || PARA DELETE SOLO USER CON "ROLE_ADMIN"
+	JSON: {
+  		"userId": 3,
+  		"mascotaId": 1,
+  		"nombreReportador": "BRUNO MOLINA",
+  		"telefono": "+56912345678",
+  		"descripcion": "vi a un perro colo negro, parecia de raza pug",
+  		"ubicacion": "Viña del Mar, sector Recreo",
+  		"imagenUrl": "https://perro.com"
+	      }
+REPORTE: 
+	http://localhost:8084/notificaciones  AGREGAR NOTIFICACION
+	http://localhost:8084/notificaciones/usuario/53 VER NOTIFICACION USUARIO
+	AUTH: TOKEN BEARE (USER) 
+	JSON: {
+    		"userId": 54,
+    		"mascotaId": 3,
+    		"reporteId": 4
+              }
