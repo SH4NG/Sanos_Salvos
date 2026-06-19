@@ -15,6 +15,9 @@ target/
 
 # Logs
 *.log
+*.log.*
+*.gz
+logs/
 
 # Sistema operativo
 .DS_Store
