@@ -1,0 +1,60 @@
+name: CI/CD Sanos Salvos
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "feature/**"
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Compilar Usuario Service
+        working-directory: Usuario_service
+        run: mvn clean package -DskipTests
+
+      - name: Compilar Mascota Service
+        working-directory: Mascota_service
+        run: mvn clean package -DskipTests
+
+      - name: Compilar Reporte Service
+        working-directory: Reporte_service
+        run: mvn clean package -DskipTests
+
+      - name: Compilar Notificacion Service
+        working-directory: Notificacion_service
+        run: mvn clean package -DskipTests
+
+      - name: Construir imagen Usuario
+        run: docker build -t usuario-service ./Usuario_service
+
+      - name: Construir imagen Mascota
+        run: docker build -t mascota-service ./Mascota_service
+
+      - name: Construir imagen Reporte
+        run: docker build -t reporte-service ./Reporte_service
+
+      - name: Construir imagen Notificacion
+        run: docker build -t notificacion-service ./Notificacion_service
+
+      - name: Validar Docker Compose
+        run: docker compose config
