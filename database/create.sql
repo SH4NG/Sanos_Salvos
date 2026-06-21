@@ -1,15 +1,11 @@
--- Bases de datos de los microservicios
-CREATE DATABASE usuarios_db;
-CREATE DATABASE mascotas_db;
-CREATE DATABASE reportes_db;
-CREATE DATABASE notificaciones_db;
+CREATE DATABASE IF NOT EXISTS usuarios_db;
+CREATE DATABASE IF NOT EXISTS mascotas_db;
+CREATE DATABASE IF NOT EXISTS reportes_db;
+CREATE DATABASE IF NOT EXISTS notificaciones_db;
 
--- Usuario de la aplicación
-CREATE USER 'myuser'@'%' IDENTIFIED BY 'password';
-
-GRANT ALL ON usuarios_db.* TO 'myuser'@'%';
-GRANT ALL ON mascotas_db.* TO 'myuser'@'%';
-GRANT ALL ON reportes_db.* TO 'myuser'@'%';
-GRANT ALL ON notificaciones_db.* TO 'myuser'@'%';
+GRANT ALL PRIVILEGES ON usuarios_db.* TO 'myuser'@'%';
+GRANT ALL PRIVILEGES ON mascotas_db.* TO 'myuser'@'%';
+GRANT ALL PRIVILEGES ON reportes_db.* TO 'myuser'@'%';
+GRANT ALL PRIVILEGES ON notificaciones_db.* TO 'myuser'@'%';
 
 FLUSH PRIVILEGES;
