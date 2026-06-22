@@ -104,4 +104,3 @@ jobs:
           script: |
             cd /home/ubuntu
             docker stack deploy -c docker-stack.yml sanos-salvos
-```
