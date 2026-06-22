@@ -4,70 +4,80 @@ services:
 
   mysql-db:
     image: sh4ng/mysql-sanos-salvos:v1
-    ports:
-      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: myuser
       MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
     networks:
       - sanos-network
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
       restart_policy:
         condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
 
   usuario-service:
-    image: sh4ng/usuario-service:v2
+    image: sh4ng/usuario-service:v1
     ports:
       - "8081:8081"
-    depends_on:
-      - mysql-db
     networks:
       - sanos-network
     deploy:
-      replicas: 1
+      replicas: 3
       restart_policy:
         condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 5s
 
   mascota-service:
-    image: sh4ng/mascota-service:v2
+    image: sh4ng/mascota-service:v1
     ports:
       - "8082:8082"
-    depends_on:
-      - mysql-db
     networks:
       - sanos-network
     deploy:
-      replicas: 1
+      replicas: 2
       restart_policy:
         condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 5s
 
   reporte-service:
-    image: sh4ng/reporte-service:v2
+    image: sh4ng/reporte-service:v1
     ports:
       - "8083:8083"
-    depends_on:
-      - mysql-db
     networks:
       - sanos-network
     deploy:
-      replicas: 1
+      replicas: 2
       restart_policy:
         condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 5s
 
   notificacion-service:
-    image: sh4ng/notificacion-service:v2
+    image: sh4ng/notificacion-service:v1
     ports:
       - "8084:8084"
-    depends_on:
-      - mysql-db
     networks:
       - sanos-network
     deploy:
-      replicas: 1
+      replicas: 2
       restart_policy:
         condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 5s
 
 networks:
   sanos-network:
