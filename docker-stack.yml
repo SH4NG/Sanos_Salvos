@@ -1,0 +1,74 @@
+version: "3.8"
+
+services:
+
+  mysql-db:
+    image: sh4ng/mysql-sanos-salvos:v1
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: password
+    networks:
+      - sanos-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  usuario-service:
+    image: sh4ng/usuario-service:v1
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql-db
+    networks:
+      - sanos-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  mascota-service:
+    image: sh4ng/mascota-service:v1
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql-db
+    networks:
+      - sanos-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  reporte-service:
+    image: sh4ng/reporte-service:v1
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mysql-db
+    networks:
+      - sanos-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  notificacion-service:
+    image: sh4ng/notificacion-service:v1
+    ports:
+      - "8084:8084"
+    depends_on:
+      - mysql-db
+    networks:
+      - sanos-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  sanos-network:
+    driver: overlay

@@ -12,7 +12,7 @@ target/
 # IntelliJ
 .idea/
 *.iml
-
+*.pem
 # Logs
 *.log
 *.log.*
