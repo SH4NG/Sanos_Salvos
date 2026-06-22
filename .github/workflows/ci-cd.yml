@@ -1,6 +1,8 @@
 name: CI/CD Sanos Salvos
 
 on:
+  workflow_dispatch:
+
   push:
     branches:
       - main
@@ -100,7 +102,6 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-
           script: |
             cd /home/ubuntu
             docker stack deploy -c docker-stack.yml sanos-salvos
