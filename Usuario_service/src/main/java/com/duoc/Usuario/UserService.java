@@ -8,9 +8,11 @@ import com.duoc.Usuario.dto.UserResponseDTO;
 
 @Service
 public class UserService {
-
+    
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SQSService sqsService;
 
     public UserResponseDTO register(UserRequestDTO dto) {
 
@@ -21,7 +23,13 @@ public class UserService {
         user.setRole(dto.getRole());
 
         User saved = userRepository.save(user);
+        String mensaje = String.format(
+        "Nuevo usuario registrado -> Username: %s, Email: %s",
+        saved.getUsername(),
+        saved.getEmail()
+        );
 
+        sqsService.enviarMensaje(mensaje);
         UserResponseDTO response = new UserResponseDTO();
         response.setId(saved.getId());
         response.setUsername(saved.getUsername());
